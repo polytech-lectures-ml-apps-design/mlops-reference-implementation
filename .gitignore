@@ -139,3 +139,5 @@ dmypy.json
 .vscode/
 /models
 /data
+/mlartifacts/
+/mlruns/
