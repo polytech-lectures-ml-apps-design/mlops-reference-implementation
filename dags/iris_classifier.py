@@ -18,7 +18,7 @@ def load_train_test_data(**kwargs):
     data_path = os.path.join(project_dir_path, "data/iris.pkl")
 
     data_url = dvc.api.get_url(path=data_path)
-    print(data_url)
+
     with open(data_url, 'rb') as data_file:
         iris = pickle.load(data_file)
 
@@ -119,7 +119,7 @@ with DAG(
     # so BentoML can find the model's requirements.txt
     t5 = BashOperator(
         task_id="build_model",
-        bash_command="cd {} && export BENTOML_MLFLOW_MODEL_PATH={{{{ ti.xcom_pull(key='model_uri') }}}} && bentoml build".format(
+        bash_command="cd {} && export BENTOML_MLFLOW_MODEL_PATH={{{{ ti.xcom_pull(key='model_uri') }}}} && echo $BENTOML_MLFLOW_MODEL_PATH && bentoml build".format(
             bento_path)
     )
 
