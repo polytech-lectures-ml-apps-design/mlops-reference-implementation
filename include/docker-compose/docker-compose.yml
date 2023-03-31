@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  classifier:
+    image: iris-classifier:latest
+    ports: 
+      - 5001:3000
+    volumes:
