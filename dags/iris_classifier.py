@@ -36,6 +36,8 @@ def _train_model():
     repo = git.Repo(project_dir_path, search_parent_directories=True)
     sha_commit = repo.head.object.hexsha
 
+    mlflow.sklearn.autolog()
+
     x_train, x_test, y_train, y_test = load_train_test_data()
 
     model = svm.SVC(gamma='scale')
