@@ -90,7 +90,7 @@ with DAG(
     # Our data does not change, but in a practical scenario, the data could have changed since last run.
     t1 = BashOperator(
         task_id="version_data",
-        bash_command="cd {} && dvc add data && dvc commit".format(
+        bash_command="cd {} && dvc add data && dvc push".format(
             project_dir_path)
     )
 
