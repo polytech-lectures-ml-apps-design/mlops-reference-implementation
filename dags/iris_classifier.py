@@ -18,8 +18,9 @@ def load_train_test_data(**kwargs):
     data_path = os.path.join(project_dir_path, "data/iris.pkl")
 
     data_url = dvc.api.get_url(path=data_path)
-
-    iris = pickle.load(data_url)
+    print(data_url)
+    with open(data_url, 'rb') as data_file:
+        iris = pickle.load(data_file)
 
     X, y = iris.data, iris.target
 
