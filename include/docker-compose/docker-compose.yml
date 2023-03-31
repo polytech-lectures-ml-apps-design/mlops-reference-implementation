@@ -4,4 +4,3 @@ services:
     image: iris-classifier:latest
     ports: 
       - 5001:3000
-    volumes:
