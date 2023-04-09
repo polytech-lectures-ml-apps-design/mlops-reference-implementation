@@ -76,6 +76,7 @@ pip install -r requirements.txt
    1. в интерфейсе MLflow (http://localhost:5000/#/experiments/ по умолчанию) появится новый запуск (run)
    ![MLflow new run](docs/mlflow_experiments.png)
    1. сделать запрос к сервису через http://localhost:5001/#/Service%20APIs/iris-classifier__predict
+   ![Iris classifier swagger](docs/swagger_example.png)
    1. при помощи ноутбука [notebooks/test_predictions.ipynb](notebooks/test_predictions.ipynb) 
    сделать запрос к развернутой модели в коде
    2. убедиться, что появился новый докер контейнер и что он запущен:
@@ -92,18 +93,27 @@ pip install -r requirements.txt
 После первого запуска данные сохраняются локальное (через DVC).
 
 
-## Useful links
+## Как устроен проект
 
-Формат записи данных в платформу:
-https://confluence.dct-ai.com/pages/viewpage.action?pageId=7671770
+* в папке [dags](dags) находится описание DAG'а `iris_classifier.py` для Airflow
+* в папке [data](data) хранятся данные, при этом версионирование данных происходит через DVC, 
+для чего служит файл [data.dvc](data.dvc)
+* в [docs](docs) лежат ресурсы (картинки) для этой документации
+* в [include](include) находятся описания для BentoML для сборки сервиса и yaml-файл для docker compose
+* в [notebooks](notebooks) лежат два Jupyter ноутбука:
+  * `iris_classifier.ipynb` для первоначального тестирования разных моделей
+  * `test_predictions.ipynb` для проверки работы собранного и запущенного сервиса внутри докер-контейнера
 
-  + connected SW (other repos)
-  + literature
-  + confluence
-  + detailed code documentation (type: reference)
-  + further how-to-guides
+## Улучшения и дополнения
 
+Улучшения и дополнения приветствуются через merge request'ы.
 
-## Contributing
-
-Contributions are highly welcome! For more details check [contribution guide](./CONTRIBUTING.md).
+Некоторые аспекты, которые можно было бы улучшить:
+* расширить цепочку обучения на следующее: вместо переобучения одной модели (SVM в текущем варианте), сделать
+3 параллельные шага по обучению моделей 3 разных типов (например, SVM, логистическая регрессия и деревья), после чего
+добавить еще одни шаг для выбора лучшей модели
+* в файле [include/bentoml/bentofile.yaml](include/bentoml/bentofile.yaml), используемом BentoML при сборке,
+сейчас явным образом прописаны зависимости; 
+это не очень гибко, так как правильнее было бы использовать файл requirements.txt, сформированный в виде артефакта
+MLflow; у меня не получилось повторить соответствующий шаг из https://mymlops.com/examples/airflow-mlflow,
+в котором используется переменная окружения `$BENTOML_MLFLOW_MODEL_PATH` 
