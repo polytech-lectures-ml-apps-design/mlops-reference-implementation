@@ -76,7 +76,13 @@ pip install -r requirements.txt
    1. в интерфейсе MLflow (http://localhost:5000/#/experiments/ по умолчанию) появится новый запуск (run)
    ![MLflow new run](docs/mlflow_experiments.png)
    1. сделать запрос к сервису через http://localhost:5001/#/Service%20APIs/iris-classifier__predict
-   1. при помощи ноутбука [notebooks/test_predictions.ipynb](notebooks/test_predictions.ipynb) сделать запрос к развернутой модели
+   1. при помощи ноутбука [notebooks/test_predictions.ipynb](notebooks/test_predictions.ipynb) 
+   сделать запрос к развернутой модели в коде
+   2. убедиться, что появился новый докер контейнер и что он запущен:
+   ```shell
+   docker images
+   docker ps
+   ```
 
 
 ### Данные
