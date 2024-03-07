@@ -76,7 +76,7 @@ with DAG(
     'iris_classifier',
     description="Pipeline for training and deploying iris classifier",
     schedule=timedelta(days=1),
-    start_date=datetime(2023, 3, 30),
+    start_date=datetime(2024, 3, 5),
     catchup=False,
     tags=["reference-implementation"]
 ) as dag:
